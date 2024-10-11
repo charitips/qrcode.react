@@ -63,7 +63,7 @@ function DownloadDemo() {
           </button>
         </div>
         <div>
-          <QRCodeSVG ref={svgRef} value="hello world" />
+          <QRCodeSVG value="hello world" />
           <button onClick={onSVGButtonClick} style={{display: 'block'}}>
             download svg
           </button>
