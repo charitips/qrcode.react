@@ -502,15 +502,23 @@ function QRCodeSVG(props: QRPropsSVG) {
     ...otherProps
   } = props;
 
-  const {margin, cells, numCells, calculatedImageSettings} = useQRCode({
-    value,
-    level,
-    minVersion,
-    includeMargin,
-    marginSize,
-    imageSettings,
+  const segments = qrcodegen.QrSegment.makeSegments(value);
+  let qrcode = qrcodegen.QrCode.encodeSegments(
+    segments,
+    ERROR_LEVEL_MAP[level],
+    minVersion
+  );
+
+  let cells = qrcode.getModules();
+
+  const margin = getMarginSize(includeMargin, marginSize);
+  const numCells = cells.length + margin * 2;
+  const calculatedImageSettings = getImageSettings(
+    cells,
     size,
-  });
+    margin,
+    imageSettings
+  );
 
   let cellsToDraw = cells;
   let image = null;
